@@ -1,3 +1,7 @@
+## not ejected yet
+
+## 빌드 스크립트 별로 다른 환경변수 파일을 사용 : package.json, .env.development1 등등...
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
