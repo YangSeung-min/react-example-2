@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import About from './pages/About';
 import Home from './pages/Home';
+import Profile from './pages/Profile'  
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <hr />
         <Route path="/" exact={true} component={Home} />
         <Route path="/about" component={About} />
+        <Route path="/profiles/:username" component={Profile} />
       </div>
       <p>{process.env.REACT_APP_DB_HOST}</p>
     </div>
