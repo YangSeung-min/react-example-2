@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 // import "./styles.css";
 
 function countActiveUsers(users) {
@@ -18,13 +18,25 @@ function Hooks() {
   });
 
   const { username, email } = inputs;
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
+
+  // const onChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setInputs({
+  //     ...inputs,
+  //     [name]: value,
+  //   });
+  // };
+
+  const onChange = useCallback(
+    e => {
+      const { name, value } = e.target;
+      setInputs({
+        ...inputs,
+        [name]: value
+      });
+    },
+    [inputs]
+  );
 
   const [users, setUsers] = useState([
     {
@@ -48,38 +60,45 @@ function Hooks() {
   ]);
 
   const nextId = useRef(4);
-  const onCreate = () => {
+  const onCreate = useCallback(() => {
     const user = {
       id: nextId.current,
       username,
-      email,
+      email
     };
-    setUsers([...users, user]);
+    setUsers(users.concat(user));
 
     setInputs({
-      username: "",
-      email: "",
+      username: '',
+      email: ''
     });
-
     nextId.current += 1;
-  };
+  }, [users, username, email]);
 
-  const onRemove = id => {
-    // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
-    // = user.id 가 id 인 것을 제거함
-    setUsers(users.filter(user => user.id !== id));
-  };
-
-  const onToggle = id => {
-    setUsers(
-      users.map(user =>
-        user.id === id ? { ...user, active: !user.active } : user
-      )
-    );
-  };
+  const onRemove = useCallback(
+    id => {
+      // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
+      // = user.id 가 id 인 것을 제거함
+      setUsers(users.filter(user => user.id !== id));
+    },
+    [users]
+  );
+  const onToggle = useCallback(
+    id => {
+      setUsers(
+        users.map(user =>
+          user.id === id ? { ...user, active: !user.active } : user
+        )
+      );
+    },
+    [users]
+  );
 
   // const count = countActiveUsers(users);
-  const count = useMemo(() => countActiveUsers(users), [users]);
+  const count = useMemo(
+    () => countActiveUsers(users),
+     [users]
+  );
 
   return (
     <div className="App">
