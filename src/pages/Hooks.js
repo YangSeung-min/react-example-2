@@ -172,7 +172,7 @@ function InputSample() {
   );
 }
 
-function CreateUser({ username, email, onChange, onCreate }) {
+const CreateUser = React.memo(({ username, email, onChange, onCreate })=>{
   return (
     <div>
       <input
@@ -190,9 +190,9 @@ function CreateUser({ username, email, onChange, onCreate }) {
       <button onClick={onCreate}>등록</button>
     </div>
   );
-}
+}); 
 
-function User({ user, onRemove, onToggle }) {
+const User = React.memo(({ user, onRemove, onToggle }) => {
   useEffect(() => {
     console.log('user 값이 설정됨');
     console.log(user);
@@ -216,9 +216,9 @@ function User({ user, onRemove, onToggle }) {
       <button onClick={() => onRemove(user.id)}>삭제</button>
     </div>
   );
-}
+});
 
-function UserList({ users, onRemove, onToggle }) {
+const UserList = React.memo(({ users, onRemove, onToggle }) => {
   return (
     <div>
       {users.map((user) => (
@@ -226,5 +226,5 @@ function UserList({ users, onRemove, onToggle }) {
       ))}
     </div>
   );
-}
+})
 export default Hooks;
