@@ -24,18 +24,21 @@ function Hooks() {
   const [users, setUsers] = useState([
     {
       id: 1,
-      username: "velopert",
+      username: "velopert1",
       email: "public.velopert@gmail.com",
+      active: true,
     },
     {
       id: 2,
       username: "myTester",
       email: "tester@example.com",
+      active: false,
     },
     {
       id: 3,
       username: "liz",
       email: "liz@example.com",
+      active: false,
     },
   ]);
 
@@ -56,6 +59,20 @@ function Hooks() {
     nextId.current += 1;
   };
 
+  const onRemove = id => {
+    // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
+    // = user.id 가 id 인 것을 제거함
+    setUsers(users.filter(user => user.id !== id));
+  };
+
+  const onToggle = id => {
+    setUsers(
+      users.map(user =>
+        user.id === id ? { ...user, active: !user.active } : user
+      )
+    );
+  };
+
   return (
     <div className="App">
       <div>
@@ -71,7 +88,7 @@ function Hooks() {
         onChange={onChange}
         onCreate={onCreate}
       />
-      <UserList users={users} />
+      <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
     </div>
   );
 }
@@ -147,19 +164,29 @@ function CreateUser({ username, email, onChange, onCreate }) {
   );
 }
 
-function User({ user }) {
+function User({ user, onRemove, onToggle }) {
   return (
     <div>
-      <b>{user.username}</b> <span>({user.email})</span>
+      <b
+        style={{
+          cursor: "pointer",
+          color: user.active ? "green" : "black",
+        }}
+        onClick={() => onToggle(user.id)}
+      >
+        {user.username}
+      </b>
+      <span>({user.email})</span>
+      <button onClick={() => onRemove(user.id)}>삭제</button>
     </div>
   );
 }
 
-function UserList({ users }) {
+function UserList({ users, onRemove, onToggle }) {
   return (
     <div>
       {users.map((user) => (
-        <User user={user} key={user.id} />
+        <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle}/>
       ))}
     </div>
   );
