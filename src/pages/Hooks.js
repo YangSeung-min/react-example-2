@@ -1,5 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 // import "./styles.css";
+
+function countActiveUsers(users) {
+  console.log('활성 사용자 수를 세는중...');
+  return users.filter(user => user.active).length;
+}
 
 function Hooks() {
   let [light, setLight] = useState(0);
@@ -73,6 +78,9 @@ function Hooks() {
     );
   };
 
+  // const count = countActiveUsers(users);
+  const count = useMemo(() => countActiveUsers(users), [users]);
+
   return (
     <div className="App">
       <div>
@@ -89,6 +97,7 @@ function Hooks() {
         onCreate={onCreate}
       />
       <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+      <div>활성사용자 수 : {count}</div>
     </div>
   );
 }
