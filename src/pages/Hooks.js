@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 // import "./styles.css";
 
 function Hooks() {
@@ -165,6 +165,14 @@ function CreateUser({ username, email, onChange, onCreate }) {
 }
 
 function User({ user, onRemove, onToggle }) {
+  useEffect(() => {
+    console.log('user 값이 설정됨');
+    console.log(user);
+    return () => {
+      console.log('user 가 바뀌기 전..');
+      console.log(user);
+    };
+  }, [user]);
   return (
     <div>
       <b
