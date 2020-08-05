@@ -4,6 +4,7 @@ import About from './pages/About';
 import Home from './pages/Home';
 import Profiles from './pages/Profiles'  
 import Hooks from './pages/Hooks'
+import Counter from './pages/Counter'
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <li>
             <Link to="/hooks">Hooks</Link>
           </li>
+          <li>
+            <Link to="/counter">Counter</Link>
+          </li>
+
         </ul>
         <hr />
         <Route path="/" exact={true} component={Home} />
@@ -29,6 +34,7 @@ function App() {
         {/* <Route path="/profiles/:username" component={Profile} /> */}
         <Route path="/profiles" component={Profiles} />
         <Route path="/hooks" component={Hooks} />
+        <Route path="/counter" component={Counter} />
       </div>
       <p>{process.env.REACT_APP_DB_HOST}</p>
     </div>
